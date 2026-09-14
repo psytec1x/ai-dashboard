@@ -1,7 +1,8 @@
-import { useEffect, type ReactNode } from 'react';
+import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { SignedIn, SignedOut, SignIn } from '@clerk/clerk-react';
 import { Layout } from './components/layout';
+import { Landing } from './pages/Landing';
 import { Dashboard } from './pages/Dashboard';
 import { Chat } from './pages/Chat';
 import { Workflows } from './pages/Workflows';
@@ -13,10 +14,6 @@ import { CommandPalette } from './components/CommandPalette';
 import { Toaster } from './components/Toaster';
 import { useAppStore } from './store';
 import { BUILTIN_PLUGINS } from './plugins/registry';
-
-function PrivateRoute({ children }: { children: ReactNode }) {
-  return <SignedIn>{children}</SignedIn>;
-}
 
 export function App() {
   const commandPaletteOpen = useAppStore((s) => s.commandPaletteOpen);
@@ -45,9 +42,14 @@ export function App() {
         <Route
           path="/"
           element={
-            <PrivateRoute>
-              <Layout />
-            </PrivateRoute>
+            <>
+              <SignedIn>
+                <Layout />
+              </SignedIn>
+              <SignedOut>
+                <Landing />
+              </SignedOut>
+            </>
           }
         >
           <Route index element={<Dashboard />} />

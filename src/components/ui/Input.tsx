@@ -1,4 +1,4 @@
-import { forwardRef, type InputHTMLAttributes, type TextareaHTMLAttributes } from 'react';
+import { forwardRef, useId, type InputHTMLAttributes, type TextareaHTMLAttributes } from 'react';
 import { cn } from '../../lib/utils';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -11,7 +11,8 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, label, error, hint, leftIcon, rightIcon, id, ...props }, ref) => {
-    const inputId = id || `input-${Math.random().toString(36).slice(2, 9)}`;
+    const autoId = useId();
+    const inputId = id || `input-${autoId}`;
     const errorId = `${inputId}-error`;
     const hintId = `${inputId}-hint`;
 
@@ -78,7 +79,8 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, label, error, hint, id, ...props }, ref) => {
-    const textareaId = id || `textarea-${Math.random().toString(36).slice(2, 9)}`;
+    const autoId = useId();
+    const textareaId = id || `textarea-${autoId}`;
     const errorId = `${textareaId}-error`;
     const hintId = `${textareaId}-hint`;
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode, forwardRef, type HTMLAttributes } from 'react';
+import { useEffect, useRef, useId, type ReactNode, forwardRef, type HTMLAttributes } from 'react';
 import { cn } from '../../lib/utils';
 import { X } from 'lucide-react';
 import { Portal } from './Portal';
@@ -14,8 +14,9 @@ export interface DialogProps {
 
 export function Dialog({ open, onOpenChange, children, title, description, size = 'md' }: DialogProps) {
   const contentRef = useRef<HTMLDivElement>(null);
-  const titleId = title ? `dialog-title-${Math.random().toString(36).slice(2, 9)}` : undefined;
-  const descriptionId = description ? `dialog-description-${Math.random().toString(36).slice(2, 9)}` : undefined;
+  const autoId = useId();
+  const titleId = title ? `dialog-title-${autoId}` : undefined;
+  const descriptionId = description ? `dialog-description-${autoId}` : undefined;
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {

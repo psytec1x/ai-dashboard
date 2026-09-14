@@ -1,20 +1,18 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 
 export function Portal({ children }: { children: ReactNode }) {
-  const mountRef = useRef<HTMLDivElement | null>(null);
+  const [mount, setMount] = useState<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    mountRef.current = document.createElement('div');
-    document.body.appendChild(mountRef.current);
+    const el = document.createElement('div');
+    document.body.appendChild(el);
+    setMount(el);
     return () => {
-      if (mountRef.current) {
-        document.body.removeChild(mountRef.current);
-      }
+      document.body.removeChild(el);
     };
   }, []);
 
-  if (!mountRef.current) return null;
-
-  return createPortal(children, mountRef.current);
+  if (!mount) return null;
+  return createPortal(children, mount);
 }
