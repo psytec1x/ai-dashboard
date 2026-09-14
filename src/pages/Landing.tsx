@@ -11,10 +11,8 @@ import {
   Globe,
   Plug,
   ArrowRight,
+  ArrowUpRight,
   Check,
-  Instagram,
-  Twitter,
-  Github,
   Brain,
   Terminal,
 } from 'lucide-react';
@@ -22,9 +20,9 @@ import { cn } from '../lib/utils';
 
 /* TODO: eigene Profile verlinken */
 const SOCIALS = [
-  { name: 'Instagram', icon: Instagram, href: 'https://instagram.com/' },
-  { name: 'Twitter / X', icon: Twitter, href: 'https://x.com/' },
-  { name: 'GitHub', icon: Github, href: 'https://github.com/' },
+  { name: 'Instagram', href: 'https://instagram.com/' },
+  { name: 'X', href: 'https://x.com/' },
+  { name: 'GitHub', href: 'https://github.com/' },
 ];
 
 const FEATURES = [
@@ -211,22 +209,18 @@ export function Landing() {
             </span>
             <span className="text-sm-med text-text-secondary">AI Dash — alle KI-Tools an einem Ort</span>
           </span>
-          <div className="flex items-center gap-2">
-            {SOCIALS.map((s) => {
-              const Icon = s.icon;
-              return (
-                <a
-                  key={s.name}
-                  href={s.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={s.name}
-                  className="w-9 h-9 rounded-full bg-white/[0.03] border border-border-standard inline-flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-white/[0.06] transition-colors"
-                >
-                  <Icon className="w-4 h-4" />
-                </a>
-              );
-            })}
+          <div className="flex items-center gap-4">
+            {SOCIALS.map((s) => (
+              <a
+                key={s.name}
+                href={s.href}
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm text-text-muted hover:text-text-primary transition-colors inline-flex items-center gap-1"
+              >
+                {s.name} <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            ))}
           </div>
           <div className="flex items-center gap-4 text-sm">
             <Link to="/sign-in" className="text-text-muted hover:text-text-primary transition-colors">Anmelden</Link>
