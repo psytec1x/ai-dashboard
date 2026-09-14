@@ -16,7 +16,7 @@ mit React 19, Vite, Tailwind CSS v4, Clerk-Auth und Cloudflare-Pages-Deployment.
 | 🌐 **API Playground** | REST-Tester (alle Methoden, Header, Body, Auth-Keys, Verlauf) |
 | 🧩 **Plugins** | 7 Built-ins + eigene Instanzen: LLM, Chain-Agent, REST-Caller, **Custom-HTML-Apps** (Sandbox-Iframe), Webhook |
 | ⌘ **Command Palette** | `Ctrl/⌘ + K` Navigation & Aktionen |
-| 🔐 **Auth** | Clerk Sign-In, geschützte Routen |
+| 🔐 **Auth** | Clerk Sign-In, geschützte Routen, öffentliche **Landing-Page** (`/`) für Logged-out |
 | 💾 **Persistenz** | Alles in localStorage — kein Backend nötig |
 
 **Eigene Tools einfügen:** Plugins → z. B. *Custom HTML App* → HTML/CSS/JS einkleben → als Instanz speichern → im Dashboard nutzen.
