@@ -55,9 +55,10 @@ export function CommandPalette({ onClose }: CommandPaletteProps) {
     return commands.filter((c) => c.name.toLowerCase().includes(q) || c.group.toLowerCase().includes(q));
   }, [commands, query]);
 
-  useEffect(() => {
+  const onQueryChange = (v: string) => {
+    setQuery(v);
     setSelected(0);
-  }, [query]);
+  };
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -87,7 +88,7 @@ export function CommandPalette({ onClose }: CommandPaletteProps) {
           <Input
             ref={inputRef}
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => onQueryChange(e.target.value)}
             placeholder="Type a command or search..."
             className="border-0 bg-transparent focus:shadow-none px-0"
             aria-label="Command search"

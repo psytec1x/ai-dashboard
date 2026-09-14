@@ -63,9 +63,11 @@ export function Chat() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
+  const lastContentLength = messages[messages.length - 1]?.content.length ?? 0;
+
   useEffect(() => {
     scrollToBottom();
-  }, [messages, scrollToBottom]);
+  }, [messages.length, lastContentLength, scrollToBottom]);
 
   useEffect(() => {
     if (activePlugin && activePluginInstance !== activePlugin.id) {

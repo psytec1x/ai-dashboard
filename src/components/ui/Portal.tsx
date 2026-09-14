@@ -2,17 +2,15 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 
 export function Portal({ children }: { children: ReactNode }) {
-  const [mount, setMount] = useState<HTMLDivElement | null>(null);
+  // Detached node creation is side-effect free; attach/detach happens in the effect.
+  const [mount] = useState<HTMLDivElement>(() => document.createElement('div'));
 
   useEffect(() => {
-    const el = document.createElement('div');
-    document.body.appendChild(el);
-    setMount(el);
+    document.body.appendChild(mount);
     return () => {
-      document.body.removeChild(el);
+      document.body.removeChild(mount);
     };
-  }, []);
+  }, [mount]);
 
-  if (!mount) return null;
   return createPortal(children, mount);
 }
