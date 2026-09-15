@@ -1,17 +1,13 @@
-# wrangler.toml — Cloudflare Pages configuration
-# Docs: https://developers.cloudflare.com/pages/configuration/
+# wrangler.toml — Cloudflare Pages & Workers configuration
+# For Pages projects, most config is done via Cloudflare dashboard.
+# This file is optional for Pages; used for Workers/Workers AI if needed.
 
 name = "ai-dashboard"
 compatibility_date = "2025-01-01"
 
-[build]
-  command = "npm run build"
-  publish_dir = "dist"
-
-[[routes]]
-  pattern = "ai-dashboard.pages.dev"
-  edge_policy = "bypass-cache"
+# Pages build config is in the dashboard or via CLI:
+#   wrangler pages dev dist/ --local
+#   wrangler pages deploy --project-name ai-dashboard
 
 [vars]
-  # Clerk publishable key — set via Cloudflare dashboard under Settings > Environment Variables
-  # VITE_CLERK_PUBLISHABLE_KEY = "pk_test_..."
+  # Add env vars here; override via Cloudflare dashboard → Settings → Environment Variables
