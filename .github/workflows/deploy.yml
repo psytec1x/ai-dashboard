@@ -42,4 +42,3 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: ai-dashboard
           directory: ./dist
-          warning: true
