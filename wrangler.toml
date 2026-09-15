@@ -1,13 +1,3 @@
-# wrangler.toml — Cloudflare Pages & Workers configuration
-# For Pages projects, most config is done via Cloudflare dashboard.
-# This file is optional for Pages; used for Workers/Workers AI if needed.
-
 name = "ai-dashboard"
 compatibility_date = "2025-01-01"
-
-# Pages build config is in the dashboard or via CLI:
-#   wrangler pages dev dist/ --local
-#   wrangler pages deploy --project-name ai-dashboard
-
-[vars]
-  # Add env vars here; override via Cloudflare dashboard → Settings → Environment Variables
+pages_build_output_dir = "dist"
