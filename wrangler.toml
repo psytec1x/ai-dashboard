@@ -1,0 +1,17 @@
+# wrangler.toml — Cloudflare Pages configuration
+# Docs: https://developers.cloudflare.com/pages/configuration/
+
+name = "ai-dashboard"
+compatibility_date = "2025-01-01"
+
+[build]
+  command = "npm run build"
+  publish_dir = "dist"
+
+[[routes]]
+  pattern = "ai-dashboard.pages.dev"
+  edge_policy = "bypass-cache"
+
+[vars]
+  # Clerk publishable key — set via Cloudflare dashboard under Settings > Environment Variables
+  # VITE_CLERK_PUBLISHABLE_KEY = "pk_test_..."

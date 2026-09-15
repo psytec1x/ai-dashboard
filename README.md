@@ -1,66 +1,45 @@
-# AI Dashboard
+# Clone this repo, then:
 
-Modularer, webbasierter Hub für **KI-Tools, Agenten, APIs, Chatbots, Code und eigene HTML-Apps** —
-mit React 19, Vite, Tailwind CSS v4, Clerk-Auth und Cloudflare-Pages-Deployment.
+1. Copy `.env.example` to `.env` and add your Clerk key
+2. Install: `npm ci`
+3. Dev: `npm run dev`
+4. Build: `npm run build`
+5. Smoke test: `npm run smoke` (verifies production output)
 
-![Stack](https://img.shields.io/badge/React-19-5e6ad2) ![Vite](https://img.shields.io/badge/Vite-8-5e6ad2)
-![Tailwind](https://img.shields.io/badge/Tailwind-v4-5e6ad2) ![Clerk](https://img.shields.io/badge/Auth-Clerk-5e6ad2)
+## Deploy to Cloudflare Pages
 
-## Features
+### Option A — Cloudflare Dashboard (no CLI)
+1. Go to [dash.cloudflare.com](https://dash.cloudflare.com) → Pages → Create
+2. Connect to GitHub → select `psytec1x/ai-dashboard`
+3. Build command: `npm run build` | Output: `dist`
+4. Under **Settings → Environment Variables**, add:
+   - `VITE_CLERK_PUBLISHABLE_KEY` = your Clerk key
+5. Deploy → your app at `ai-dashboard.pages.dev`
 
-| Bereich | Was geht |
-|---|---|
-| 💬 **Chat** | OpenAI (GPT-4o, o1-mini …) + Anthropic Claude mit **Streaming**, Sessions, Verlauf — BYOK |
-| 🔗 **Workflows** | Prompt-Ketten mit `{{prev}}`-Piping: Plan → Execute → Review |
-| 💻 **Code** | JS-Runner in Sandbox-Worker mit Output-Capture + History |
-| 🌐 **API Playground** | REST-Tester (alle Methoden, Header, Body, Auth-Keys, Verlauf) |
-| 🧩 **Plugins** | 7 Built-ins + eigene Instanzen: LLM, Chain-Agent, REST-Caller, **Custom-HTML-Apps** (Sandbox-Iframe), Webhook |
-| ⌘ **Command Palette** | `Ctrl/⌘ + K` Navigation & Aktionen |
-| 🔐 **Auth** | Clerk Sign-In, geschützte Routen, öffentliche **Landing-Page** (`/`) für Logged-out |
-| 💾 **Persistenz** | Alles in localStorage — kein Backend nötig |
-
-**Eigene Tools einfügen:** Plugins → z. B. *Custom HTML App* → HTML/CSS/JS einkleben → als Instanz speichern → im Dashboard nutzen.
-API-Keys bleiben im Browser (BYOK), Requests gehen direkt an den Provider.
-
-## Schnellstart
-
+### Option B — Wrangler CLI (local)
 ```bash
-npm install
-cp .env.example .env   # VITE_CLERK_PUBLISHABLE_KEY von dashboard.clerk.com eintragen
-npm run dev
+wrangler login
+wrangler pages deploy --project-name ai-dashboard --commit-hash main --output-dir dist
 ```
 
-Ohne Key zeigt die App einen Setup-Screen mit Anleitung.
+### Option C — GitHub Actions (auto on push)
+1. In Cloudflare, create a API Token (`account:read`, `workers:write`, `pages:read`, `pages:write`)
+2. In GitHub repo → Settings → Secrets → Variables:
+   - `CLOUDFLARE_API_TOKEN` = your Cloudflare API token
+   - `CLOUDFLARE_ACCOUNT_ID` = your Cloudflare account ID
+   - `VITE_CLERK_PUBLISHABLE_KEY` = your Clerk key
+3. Push to `main` → workflow auto-deploys
 
-## Build & Deploy (Cloudflare Pages)
+## Clerk Setup (required)
+1. [dashboard.clerk.com](https://dashboard.clerk.com) → Create Application → Test
+2. Copy the **Publishable Key**
+3. Add to `.env` or Cloudflare Pages → Settings → Environment Variables
 
+## Quick Start
 ```bash
-npm run build   # → dist/
+git clone https://github.com/psytec1x/ai-dashboard.git
+cd ai-dashboard
+cp .env.example .env
+# Edit .env → add VITE_CLERK_PUBLISHABLE_KEY
+npm ci && npm run dev
 ```
-
-**Option A — Git-Integration (empfohlen):**
-1. Repo zu GitHub pushen
-2. Cloudflare Dashboard → Pages → *Create* → Repo verbinden
-3. Build command: `npm run build`, Output: `dist`
-4. Env var: `VITE_CLERK_PUBLISHABLE_KEY` (Production-Key) → Deploy
-
-**Option B — Direct Upload:** `dist/` als ZIP in Pages hochladen.
-SPA-Routing wird via `public/_redirects` (`/* → /index.html 200`) abgedeckt.
-
-## Projektstruktur
-
-```
-src/
-  components/ui/      Design-System (Button, Card, Dialog, Dropdown, Tabs …)
-  components/layout/  Sidebar, Header, Layout
-  pages/              Dashboard, Chat, Workflows, Code, API, Plugins, Settings
-  plugins/registry.ts Built-in Plugin-Manifeste
-  lib/api.ts          OpenAI/Anthropic-Client (Streaming)
-  store/              Zustand-State mit Persistenz
-  types/              Plugin-, Chat-, Workflow-Typen
-marketing/            Instagram-Assets + Captions
-```
-
-## Marketing
-
-Assets + Captions (DE/EN, Hashtags) liegen in `marketing/`.
